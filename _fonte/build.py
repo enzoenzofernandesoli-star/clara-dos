@@ -15,24 +15,36 @@ OUT = os.path.dirname(ROOT)
 
 def render_pratique(n, items):
     mcs = [i for i in items if i[0] == 'mc']
-    out = [f'<div class="pratique" id="pratique-{n}">',
-           f'<h3>Pratique: página {n}</h3>',
-           '<p class="pr-intro">Responda de cabeça antes de conferir. '
-           f'<span class="score">Acertos nas de alternativa: <b>0</b> de {len(mcs)}</span></p>',
-           '<ol class="pr-list">']
+    out = [f'<div class="pratica" id="pratique-{n}"><h3 class="prat-h">Pratique: página {n}</h3>',
+           f'<p class="prat-sub">Responda de cabeça antes de conferir. Acertos nas de alternativa: <span class="placar">0 de {len(mcs)}</span></p>']
+    k = 0
     for it in items:
+        k += 1
         if it[0] == 'mc':
             _, ans, q, opts = it
-            out.append(f'<li class="mc" data-answer="{ans}"><p class="q">{q}</p><div class="opts">')
-            for letter, o in zip('ABCD', opts):
-                out.append(f'<button type="button" data-o="{letter}"><b>{letter})</b> {o}</button>')
-            out.append('</div><p class="fb" aria-live="polite"></p></li>')
+            certa = 'ABCD'.index(ans)
+            out.append(f'<div class="q mc" data-certa="{certa}"><p class="perg"><span class="qn">{k}.</span> {q}</p><div class="ops">')
+            for i, (letter, o) in enumerate(zip('ABCD', opts)):
+                out.append(f'<button type="button" class="op" data-i="{i}">{letter}) {o}</button>')
+            out.append('</div><p class="fb" hidden><b class="fbt"></b></p></div>')
         else:
             _, q, a = it
-            out.append(f'<li class="open"><p class="q">{q}</p><details><summary>Ver resposta esperada</summary>'
-                       f'<p>{a}</p></details></li>')
-    out.append('</ol></div>')
+            out.append(f'<div class="q ab"><p class="perg"><span class="qn">{k}.</span> {q}</p><details><summary>Ver resposta esperada</summary><p>{a}</p></details></div>')
+    out.append('</div>')
     return '\n'.join(out)
+
+
+def estilo_capitaes(html):
+    import re as _re
+    html = _re.sub(r'<p class="pg-label">(Página \d+)</p>\s*<h2>([\s\S]*?)</h2>',
+                   r'<header class="pag-head"><span class="pag-num">\1</span><h2>\2</h2></header>', html)
+    html = html.replace('<article class="cena"', '<article class="cap"')
+    html = html.replace('<nav class="nesta"', '<nav class="toc"')
+    html = html.replace('<div class="tabela-wrap">', '<div class="tbl">')
+    html = html.replace('<div class="analise">\n<h4>Análise</h4>', '<div class="analise">\n<p class="rotulo">Análise</p>')
+    html = html.replace('<h4>Análise</h4>', '<p class="rotulo">Análise</p>')
+    html = _re.sub(r'<h3([^>]*)>★ ', r'<h3\1><span class="star" aria-label="cena importante">★</span> ', html)
+    return html
 
 
 def process(text):
@@ -61,7 +73,7 @@ def process(text):
 
 def main():
     order = sorted(f for f in os.listdir(SRC) if f.endswith('.html'))
-    body = '\n'.join(process(open(os.path.join(SRC, f), encoding='utf-8').read()) for f in order)
+    body = estilo_capitaes('\n'.join(process(open(os.path.join(SRC, f), encoding='utf-8').read()) for f in order))
     os.makedirs(OUT, exist_ok=True)
     open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(body)
     # contagens
