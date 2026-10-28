@@ -1,0 +1,57 @@
+
+</main>
+<footer class="rodape">
+  <p>Clara dos Anjos, de Lima Barreto · resumo de estudo · <a href="mapa.html">mapa mental</a></p>
+</footer>
+<a class="fab-topo" href="#topo" aria-label="Voltar ao topo">↑</a>
+<a class="fab-mapa" href="mapa.html" aria-label="Abrir o mapa mental">Mapa</a>
+<script>
+(function(){
+  // Práticas: alternativas com placar por página
+  document.querySelectorAll('.pratique').forEach(function(box){
+    var scoreEl = box.querySelector('.score b');
+    var acertos = 0;
+    box.querySelectorAll('li.mc').forEach(function(li){
+      var ans = li.getAttribute('data-answer');
+      var fb = li.querySelector('.fb');
+      li.querySelectorAll('button').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          if (li.classList.contains('feito')) return;
+          li.classList.add('feito');
+          var escolha = btn.getAttribute('data-o');
+          li.querySelectorAll('button').forEach(function(b){
+            b.disabled = true;
+            if (b.getAttribute('data-o') === ans) b.classList.add('certa');
+          });
+          if (escolha === ans){
+            btn.classList.add('certa'); acertos++; fb.textContent = 'Certo!';
+          } else {
+            btn.classList.add('errada'); fb.textContent = 'Não. A certa é a ' + ans + '.';
+          }
+          scoreEl.textContent = acertos;
+        });
+      });
+    });
+    var reset = document.createElement('button');
+    reset.type = 'button'; reset.className = 'refazer'; reset.textContent = 'Refazer as alternativas';
+    reset.addEventListener('click', function(){
+      acertos = 0; scoreEl.textContent = 0;
+      box.querySelectorAll('li.mc').forEach(function(li){
+        li.classList.remove('feito');
+        li.querySelector('.fb').textContent = '';
+        li.querySelectorAll('button').forEach(function(b){ b.disabled = false; b.classList.remove('certa','errada'); });
+      });
+    });
+    box.appendChild(reset);
+  });
+  // Destaca a cena vinda do mapa (#cap...)
+  function marca(){
+    var h = location.hash && document.getElementById(location.hash.slice(1));
+    document.querySelectorAll('.alvo').forEach(function(e){ e.classList.remove('alvo'); });
+    if (h){ h.classList.add('alvo'); }
+  }
+  window.addEventListener('hashchange', marca); marca();
+})();
+</script>
+</body>
+</html>

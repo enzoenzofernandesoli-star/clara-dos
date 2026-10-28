@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Mapa mental interativo de Clara dos Anjos: personagens, cenas e temas ligados.">
+<title>Mapa de Clara dos Anjos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<style>
+:root{--bg:#0d1018;--bg2:#121623;--card:#171c2b;--card2:#1d2335;--line:#2a3148;--txt:#e9e4d8;--txt2:#b9b3a6;--muted:#8c8778;--ouro:#e6b85c;--ouro2:#f3d59a;
+--p1:#7fa7e0;--p2:#b48ae6;--p3:#e27d8f;--p4:#e6a35c;--tema:#7cc8a0;--fam:#f3d59a;--ali:#9fd3e8;--cas:#e46a5c;--vit:#d99ac8;--fcas:#c8b08a;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--txt);font:15px/1.5 Inter,system-ui,sans-serif}
+header{padding:12px 16px 8px;border-bottom:1px solid var(--line);background:var(--bg2)}
+header a{color:var(--ouro2);text-decoration:none;font-size:.9rem}
+h1{font-family:Fraunces,Georgia,serif;font-size:1.5rem;margin:4px 0 2px;color:#fff}
+.intro{margin:0;color:var(--txt2);font-size:.88rem}
+.bar{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
+.bar button{font:inherit;font-size:.85rem;padding:7px 11px;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer}
+.bar button.on{background:var(--ouro);color:#1b1406;border-color:var(--ouro);font-weight:700}
+.bar button:hover{border-color:var(--ouro)}
+.leg{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:8px;font-size:.78rem;color:var(--txt2)}
+.leg span{display:inline-flex;align-items:center;gap:5px;cursor:pointer}
+.leg span.off{opacity:.35}
+.leg i{width:11px;height:11px;border-radius:3px;display:inline-block}
+#wrap{position:relative;height:calc(100% - 150px);min-height:420px}
+#svg{width:100%;height:100%;display:block;touch-action:none;cursor:grab;background:radial-gradient(900px 500px at 50% 0%,#18203a 0%,transparent 70%)}
+#svg.drag{cursor:grabbing}
+.edge{fill:none;stroke:#4a5578;stroke-width:1.1;opacity:.28;transition:opacity .2s}
+.edge.hi{opacity:1;stroke-width:2.2}
+.node{cursor:pointer;transition:opacity .2s}
+.node rect{stroke-width:1.5}
+.node text{font-family:Inter,sans-serif;pointer-events:none}
+.dim .node{opacity:.18}.dim .edge{opacity:.05}
+.dim .node.hi{opacity:1}.dim .edge.hi{opacity:1}
+.node.sel rect{stroke:#fff;stroke-width:3}
+.plabel{font-family:Fraunces,serif;font-size:22px;fill:#fff;opacity:.85}
+.collabel{font-size:13px;fill:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+#painel{position:absolute;right:12px;top:12px;width:min(380px,calc(100% - 24px));max-height:calc(100% - 24px);overflow:auto;background:rgba(23,28,43,.97);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:0 20px 50px rgba(0,0,0,.5);display:none}
+#painel.on{display:block}
+#painel h2{font-family:Fraunces,serif;font-size:1.25rem;margin:4px 0 4px;color:#fff}
+#painel .tipo{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ouro)}
+#painel .pg{color:var(--muted);font-size:.85rem}
+#painel p{color:var(--txt2);margin:.5em 0}
+#painel ul{padding-left:1.1em;margin:.3em 0}
+#painel li button{all:unset;cursor:pointer;color:var(--ouro2)}
+#painel li button:hover{text-decoration:underline}
+#painel .abrir{display:inline-block;margin-top:8px;background:var(--ouro);color:#1b1406;font-weight:700;padding:8px 12px;border-radius:10px;text-decoration:none}
+#painel .fechar{position:absolute;right:10px;top:8px;background:none;border:0;color:var(--txt2);font-size:1.4rem;cursor:pointer}
+#lista{display:none;padding:14px 16px 60px;max-width:900px;margin:0 auto}
+#lista h3{font-family:Fraunces,serif;color:#fff;margin:18px 0 6px}
+#lista .it{display:block;width:100%;text-align:left;font:inherit;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--c);color:var(--txt);border-radius:10px;padding:9px 12px;margin:6px 0;cursor:pointer}
+#lista .it small{color:var(--muted)}
+#lista .it:hover{border-color:var(--ouro)}
+@media(max-width:700px){#painel{top:auto;bottom:10px;max-height:55%}h1{font-size:1.2rem}.intro{font-size:.78rem}.bar button{padding:6px 9px;font-size:.8rem}.leg{flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;padding-bottom:4px}}
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html">← Voltar ao resumo</a>
+  <h1>Mapa de Clara dos Anjos</h1>
+  <p class="intro">Toque numa <b>cena</b> para ver quem aparece e o que acontece; toque num <b>personagem</b> para ver o caminho dele no livro; toque num <b>tema</b> para ver onde ele aparece. "p." = páginas do PDF. Arraste para mover, use a roda ou dois dedos para o zoom.</p>
+  <div class="bar">
+    <button id="bMapa" class="on" type="button">Mapa</button>
+    <button id="bLista" type="button">Lista</button>
+    <button id="bMais" type="button" aria-label="Aumentar zoom">+</button>
+    <button id="bMenos" type="button" aria-label="Diminuir zoom">−</button>
+    <button id="bTudo" type="button">Ver tudo</button>
+    <button id="bLimpa" type="button">Limpar destaque</button>
+  </div>
+  <div class="leg" id="leg"></div>
+</header>
+<div id="wrap">
+  <svg id="svg" xmlns="http://www.w3.org/2000/svg" aria-label="Mapa mental de personagens, cenas e temas"><g id="cam"><g id="edges"></g><g id="labels"></g><g id="nodes"></g></g></svg>
+  <aside id="painel" aria-live="polite"></aside>
+</div>
+<div id="lista"></div>
+
+<script>
+const GRUPOS = {
+  p1:{nome:'Parte 1 (cap. I–III)',cor:'var(--p1)',hex:'#7fa7e0'},
+  p2:{nome:'Parte 2 (cap. IV–VI)',cor:'var(--p2)',hex:'#b48ae6'},
+  p3:{nome:'Parte 3 (cap. VII–VIII)',cor:'var(--p3)',hex:'#e27d8f'},
+  p4:{nome:'Parte 4 (cap. IX–XI)',cor:'var(--p4)',hex:'#e6a35c'},
+  fam:{nome:'Família de Clara',cor:'var(--fam)',hex:'#f3d59a'},
+  ali:{nome:'Vizinhos e aliados',cor:'var(--ali)',hex:'#9fd3e8'},
+  cas:{nome:'Cassi e os seus',cor:'var(--cas)',hex:'#e46a5c'},
+  fcas:{nome:'Família de Cassi',cor:'var(--fcas)',hex:'#c8b08a'},
+  vit:{nome:'Vítimas de Cassi',cor:'var(--vit)',hex:'#d99ac8'},
+  tema:{nome:'Temas',cor:'var(--tema)',hex:'#7cc8a0'}
+};
+
+const CENAS = [
+ {id:'s1',g:'p1',t:'O carteiro e o solo de domingo',pg:'p. 1–7',a:'cap1',star:0,p:['joaquim','engracia','clara','marramaque','lafoes'],
+  d:'Joaquim, carteiro e flautista de Diamantina, sua casa no subúrbio, os "bíblias" da chácara. No solo debaixo do tamarineiro, Lafões propõe trazer Cassi ao aniversário e Marramaque explode: "semelhante pústula". Clara: "Quem seria esse Cassi?"'},
+ {id:'s2',g:'p1',t:'Cassi: a ficha e o caso Nair',pg:'p. 8–12',a:'cap2',star:1,p:['cassi','salustiana','manuel','catarina','irene','nair','ines','baeta','ataliba'],
+  d:'Quase dez defloramentos, a mãe que o livra por preconceito ("Mas é a sexta moça, Salustiana!"), o Lord Jones inventado. Nair seduzida por carta; a mãe dela se mata com lisol; o pai: "Quedê ele?". Cassi vai para o porão, com os galos de briga.'},
+ {id:'s3',g:'p1',t:'O revólver, a turma e a infância',pg:'p. 12–16',a:'cap2',star:0,p:['cassi','ataliba','zeze','arnaldo'],
+  d:'O irmão da normalista ameaça Cassi com um Smith & Wesson e ele recua (depois mente à turma). A turma: Timbó, Zezé Mateus, Franco Sousa, Arnaldo. Infância: Salesianos, canos de chumbo, aprendiz de tipógrafo. O método frio de sedução: "o violão e a modinha eram seus cúmplices".'},
+ {id:'s4',g:'p1',t:'A vida de Marramaque',pg:'p. 17–19',a:'cap3',star:0,p:['marramaque'],
+  d:'Caixeiro na roça, Casimiro de Abreu, Mendonça, a farmácia, a pequena imprensa abolicionista, o soneto de Aquiles Varejão. Justo, culto e leal.'},
+ {id:'s5',g:'p1',t:'A gaúcha e Lafões no xadrez',pg:'p. 19–20',a:'cap3',star:0,p:['cassi','lafoes','gaucha'],
+  d:'O marido maquinista mata a mulher e persegue Cassi, que foge descalço. No xadrez, Cassi ganha um cigarro de Lafões, que passa a achar que foi Cassi quem o soltou.'},
+ {id:'s6',g:'p1',t:'"A priori, estão condenadas"; Cassi decide ir',pg:'p. 21–22',a:'cap3',star:1,p:['marramaque','clara','engracia','joaquim','lafoes','cassi','ataliba','zeze'],
+  d:'Marramaque sabe do perigo para as moças "do nascimento e da cor" de Clara. "O que é que esse Cassi faz, padrinho?" "Não é de tua conta, bisbilhoteira!". Joaquim aceita Cassi uma vez. A turma: "torrão de açúcar". Cassi decide experimentar.'},
+ {id:'s7',g:'p2',t:'O baile: "Na Roça" e "Persistência"',pg:'p. 23–28',a:'cap4',star:1,p:['clara','cassi','marramaque','joaquim','engracia','margarida','praxedes','meneses','lafoes','etelvina'],
+  d:'Etelvina avisa: "Este homem não presta". Cassi entra (César Bórgia), canta "Na Roça" revirando os olhos e Clara entra em êxtase. Praxedes recita "A Lágrima". Marramaque recita "Persistência" olhando Cassi ("mas é que sou muito burro"). A Consciência; "Aquele boneco de engonço me paga". Engrácia proíbe Cassi; Clara chora.'},
+ {id:'s8',g:'p2',t:'Engrácia, a clausura e a 2ª visita',pg:'p. 29–31',a:'cap5',star:1,p:['engracia','clara','joaquim','cassi'],
+  d:'Engrácia passiva, de família de libertos; "superstição dos processos mecânicos". A teoria do amor das modinhas ("para ele não há obstáculos de raça"). Joaquim despacha Cassi: "Que é que manda nesta casa?". "Ele era branco; e ela, mulata. Mas que tinha isso?" O episódio do sal.'},
+ {id:'s9',g:'p2',t:'A venda: Bacamarte, Flores, Alípio',pg:'p. 31–34',a:'cap5',star:0,p:['bacamarte','flores','alipio','nascimento','meneses','barcelos'],
+  d:'Mme. Bacamarte, seduzida, casada à força, abandonada. Leonardo Flores: "Eu sou Leonardo Flores". Alípio conta toda a ficha de Cassi e fala do protetor Capitão Barcelos. Meneses decide "ir até o fim".'},
+ {id:'s10',g:'p2',t:'Cassi visita Lafões; o "pé-pe"',pg:'p. 35–38',a:'cap6',star:0,p:['cassi','lafoes','edmeia'],
+  d:'A "teoria" dos "dois corações que se amam". Edméia: "Principalmente aquele pé-pe". O narrador: Cassi não ama, quer a posse; "criminoso nato".'},
+ {id:'s11',g:'p2',t:'O tio Augusto e o caderno',pg:'p. 38–39',a:'cap6',star:0,p:['cassi','manuel','salustiana'],
+  d:'Manuel: "tudo é verdade". Cassi, embaixo da janela, se apavora com o caderno datilografado que circula. Pensa em vender os galos e fugir depois de "acabar a coisa".'},
+ {id:'s12',g:'p2',t:'Arnaldo espiona a venda',pg:'p. 39–41',a:'cap6',star:0,p:['arnaldo','marramaque','alipio','nascimento','cassi'],
+  d:'Mr. Persons cobra a capa roubada. Marramaque conta que recebeu o caderno e deu ao compadre: "Com uma boa garrucha" / "Ou revólver". Cassi: "Ainda não foi desta vez."'},
+ {id:'s13',g:'p3',t:'A crônica do subúrbio',pg:'p. 42–44',a:'cap7a',star:1,p:[],
+  d:'Barracos sem esgoto, bichos nas ruas ("Mimoso"!), brigas de vizinhas, o defunto esquecido, trens lotados, a Baixada. O governo cobra impostos e abandona. "O subúrbio é o refúgio dos infelizes."'},
+ {id:'s14',g:'p3',t:'Cassi compra Meneses',pg:'p. 44–48',a:'cap7b',star:1,p:['cassi','praxedes','meneses'],
+  d:'Praxedes conta que Meneses trata os dentes de Clara. A vida de Meneses. No Fagundes: "Estou com setenta anos e não sei o que fiz na vida". Cassi dá dez mil-réis por versos de Leonardo Flores.'},
+ {id:'s15',g:'p3',t:'"Pois eu não vendo"',pg:'p. 49–53',a:'cap7c',star:1,p:['meneses','flores','castorina'],
+  d:'A miséria da casa de Meneses. Ele gasta o dinheiro de Flores. Flores: "Nasci pobre, nasci mulato…" e recusa vender versos. Meneses sonha que está acorrentado.'},
+ {id:'s16',g:'p3',t:'A dor de dente; Meneses chamado',pg:'p. 54–58',a:'cap8a',star:0,p:['clara','joaquim','engracia','margarida','meneses','nascimento'],
+  d:'Joaquim confiante. "Clara era uma natureza amorfa, pastosa." Quem espalha o caderno é o marido de Nair. "Dentistas! (…) casa de perdição". Joaquim chama Meneses.'},
+ {id:'s17',g:'p3',t:'As cartas por Meneses',pg:'p. 58–62',a:'cap8b',star:1,p:['meneses','cassi','clara','joaquim'],
+  d:'Meneses faz os versos; Cassi sugere "por intermédio da filha" e escreve a "Dona Clara". Por um mês e tanto Meneses leva as cartas: "Contra a força não há resistência". O médico: "coisas da idade e do sexo". Niterói.'},
+ {id:'s18',g:'p3',t:'A reunião e a carta de Clara',pg:'p. 62–63',a:'cap8c',star:1,p:['margarida','clara','engracia','joaquim','marramaque','lafoes','meneses','cassi'],
+  d:'Margarida descobre ("Será possível?"). Marramaque: "não escolheria Clara, uma mulatinha pobre, filha de um simples carteiro". "Fresca amiga!" Clara escreve tudo a Cassi; Meneses entrega: "Para que viver tanto?".'},
+ {id:'s19',g:'p3',t:'O assassinato de Marramaque',pg:'p. 64',a:'cap8c',star:1,p:['cassi','arnaldo','marramaque'],
+  d:'"Vamos dar-lhe uma surra." Sábado de chuva, ladeira deserta: "Capenga, você vai apanhar". Morto a pauladas. "Ao seu jeito, foi um herói e um poeta."'},
+ {id:'s20',g:'p4',t:'O ovo de Colombo e a investigação',pg:'p. 65–67',a:'cap9a',star:0,p:['marramaque','meneses','alipio','nascimento'],
+  d:'Crime sem roubo nem motivo aparente. A última tarde de Marramaque desmontando a "mecânica" de Meneses. Os papéis: "Boninas e Sensitivas", o retrato de Eponina. O crime é esquecido.'},
+ {id:'s21',g:'p4',t:'Culpa, medo e a fuga planejada',pg:'p. 67–70',a:'cap9b',star:0,p:['clara','meneses','cassi','arnaldo','zeze','salustiana','manuel','catarina','irene'],
+  d:'Clara suspeita e perdoa ("ato de loucura" por amor). Meneses se sente cúmplice. Cassi sem remorso. Arnaldo no necrotério. A mentira do Mato Grosso; o pai: "Que vá para o diabo!".'},
+ {id:'s22',g:'p4',t:'Cassi na cidade e Inês',pg:'p. 70–73',a:'cap9c',star:1,p:['cassi','ines'],
+  d:'Fora do subúrbio Cassi "não era nada". Nos becos, Inês, a primeira vítima, o reconhece: o filho dele está na Detenção. Ele não sente nada.'},
+ {id:'s23',g:'p4',t:'A mancha negra; a entrega',pg:'p. 74–76',a:'cap10a',star:1,p:['clara','cassi'],
+  d:'Clara na janela vê a mancha negra perto do Cruzeiro: "Que será de mim, meu Deus?". Lembra a sedução ("Roma não se fez num dia"), a noite da chuva, o "torpor". Está grávida.'},
+ {id:'s24',g:'p4',t:'A "Andotiva" e a noite na relva',pg:'p. 76–78',a:'cap10b',star:0,p:['meneses','flores','castorina','joaquim','lafoes'],
+  d:'Joaquim abatido; fim do solo; Lafões transferido. Meneses e sua máquina sem rodas. Flores vê "verde no céu"; os dois dormem na relva.'},
+ {id:'s25',g:'p4',t:'Meneses morre; Cassi fugiu',pg:'p. 79–81',a:'cap11a',star:1,p:['flores','meneses','praxedes','clara','engracia','joaquim'],
+  d:'Discurso de Flores ao Sol. Praxedes: Cassi embarcou para São Paulo. Clara entende: "Porque era pobre e, além de pobre, mulata". Pensa em aborto. "Você pensa que todo doutor é inteligente?"'},
+ {id:'s26',g:'p4',t:'Margarida descobre tudo',pg:'p. 81–82',a:'cap11b',star:0,p:['clara','margarida','engracia'],
+  d:'O pedido de dinheiro e a mentira. "Clara, você não fala a verdade." A confissão; "Me perdoe, mamãe!".'},
+ {id:'s27',g:'p4',t:'"Sua negra" e "Nós não somos nada"',pg:'p. 82–85',a:'cap11c',star:1,p:['clara','margarida','salustiana','manuel','catarina','irene','engracia'],
+  d:'"Que se case comigo." "Que é que você diz, sua negra?" "A culpa é delas." Manuel pede perdão. No bonde, Clara entende seu lugar. "Mamãe! Nós não somos nada nesta vida."'}
+];
+
+const PESSOAS = [
+ {id:'clara',g:'fam',t:'Clara dos Anjos',d:'17 anos, mulata, filha única do carteiro, criada presa e cheia de modinhas. Encanta-se com Cassi, troca cartas por Meneses, se entrega, engravida e é abandonada. No fim toma consciência: "Nós não somos nada nesta vida".',a:'p7'},
+ {id:'joaquim',g:'fam',t:'Joaquim dos Anjos',d:'Carteiro, flautista e compositor, bom e confiante. Aceita Cassi uma vez e depois o despacha; chama Meneses para tratar a filha; paga o enterro de Meneses.',a:'p7'},
+ {id:'engracia',g:'fam',t:'Engrácia',d:'A mãe passiva e devota, filha de libertos. Vigia e tranca a filha sem explicar. Odeia Cassi.',a:'p7'},
+ {id:'marramaque',g:'ali',t:'Marramaque',d:'Padrinho de Clara, contínuo semiparalítico, ex-boêmio abolicionista. Desafia Cassi no baile, mostra o caderno, aconselha Joaquim. Assassinado a pauladas. "Herói e poeta".',a:'p7'},
+ {id:'margarida',g:'ali',t:'Dona Margarida',d:'Viúva russa-alemã, trabalhadora e corajosa. Descobre o namoro e depois a gravidez; enfrenta Salustiana. Modelo de caráter e vontade.',a:'p7'},
+ {id:'meneses',g:'ali',t:'Meneses',d:'"Doutor" sem diploma, dentista ambulante, bêbado e honesto até ser comprado por Cassi. Vira mensageiro das cartas. Morre na relva.',a:'p7'},
+ {id:'flores',g:'ali',t:'Leonardo Flores',d:'Poeta mulato famoso e pobre, alcoólatra, com irmão louco. Recusa vender versos. Quase um autorretrato de Lima Barreto.',a:'p7'},
+ {id:'castorina',g:'ali',t:'Dona Castorina',d:'Mulher de Flores, mulata pequena e resignada que sustenta a casa.',a:'p7'},
+ {id:'lafoes',g:'ali',t:'Lafões',d:'Guarda das obras públicas, português ingênuo. Traz Cassi por gratidão (o xadrez). Acaba transferido e arrependido.',a:'p7'},
+ {id:'edmeia',g:'ali',t:'Edméia',d:'Filha de Lafões, 12 anos. Conta a Cassi que o "pé-pe" não gosta dele.',a:'p7'},
+ {id:'praxedes',g:'ali',t:'Praxedes',d:'"Doutor" sem diploma de cabeça enorme. Recita "A Lágrima"; revela que Meneses trata Clara e, no fim, que Cassi fugiu.',a:'p7'},
+ {id:'nascimento',g:'ali',t:'Seu Nascimento',d:'Dono da venda, o "jornal falado" do bairro.',a:'p7'},
+ {id:'alipio',g:'ali',t:'Alípio',d:'Rapaz delicado e curioso da venda; conta toda a ficha de Cassi e chama Arnaldo de "peste".',a:'p7'},
+ {id:'etelvina',g:'ali',t:'Etelvina (amiga)',d:'Colega de Clara: "Clara, toma cuidado. Este homem não presta."',a:'p7'},
+ {id:'cassi',g:'cas',t:'Cassi Jones',d:'Violeiro branco, quase 30 anos, sedutor de moças pobres, avarento, nunca trabalhou. Compra Meneses, mata Marramaque, seduz Clara e foge para São Paulo impune.',a:'p7'},
+ {id:'arnaldo',g:'cas',t:'Arnaldo',d:'Ladrão de trem. Espiona a venda e é cúmplice no assassinato de Marramaque. Depois bebe com medo de ser preso.',a:'p7'},
+ {id:'ataliba',g:'cas',t:'Ataliba do Timbó',d:'Imitador de Cassi, casado à força com Ernestina; levou guarda-chuvada de Dona Margarida. Conseguiu o modelo de carta que seduziu Nair.',a:'p7'},
+ {id:'zeze',g:'cas',t:'Zezé Mateus',d:'Bêbado "imbecil" da turma, o único sem maldade.',a:'p7'},
+ {id:'barcelos',g:'cas',t:'Capitão Barcelos',d:'Chefe político que protege Cassi em troca de capangagem eleitoral.',a:'p7'},
+ {id:'salustiana',g:'fcas',t:'Dona Salustiana',d:'Mãe de Cassi, vaidosa (Lord Jones). Livra o filho, expulsou Inês grávida, chama Clara de "sua negra": "A culpa é delas".',a:'p7'},
+ {id:'manuel',g:'fcas',t:'Manuel de Azevedo',d:'Pai de Cassi, honesto e severo. Tira o filho da mesa, confirma o caderno, e no fim pede perdão a Clara.',a:'p7'},
+ {id:'catarina',g:'fcas',t:'Catarina',d:'Irmã de Cassi, professora de piano de Nair; sente-se culpada.',a:'p7'},
+ {id:'irene',g:'fcas',t:'Irene',d:'Irmã normalista e severa: "é melhor que ele trabalhe".',a:'p7'},
+ {id:'baeta',g:'fcas',t:'Dr. Baeta Picanço',d:'Tio médico do Exército; recebe Cassi em Guaratiba e o devolve.',a:'p7'},
+ {id:'nair',g:'vit',t:'Nair',d:'Seduzida por carta; a mãe se suicida com lisol. Casa depois com o oficial que espalha o caderno.',a:'cap2'},
+ {id:'ines',g:'vit',t:'Inês',d:'A primeira vítima, criada pela mãe de Cassi e expulsa grávida. Nos becos, com o filho de Cassi na Detenção.',a:'cap9c'},
+ {id:'gaucha',g:'vit',t:'A gaúcha',d:'Casada, morta a tiros pelo marido que descobriu o caso com Cassi.',a:'cap3'},
+ {id:'bacamarte',g:'vit',t:'Mme. Bacamarte',d:'Seduzida, casada à força, abandonada, prostituída. O futuro que Clara teme (não é vítima de Cassi, mas do mesmo sistema).',a:'cap5'}
+];
+
+const TEMAS = [
+ {id:'t1',t:'Racismo e a mulher negra',a:'t-racismo',s:['s2','s6','s8','s18','s22','s25','s27'],d:'"A priori, estão condenadas"; "uma mulatinha pobre"; "sua negra". Clara é escolhida por ser pobre e mulata.'},
+ {id:'t2',t:'Educação de Clara',a:'t-educacao',s:['s8','s16','s17','s27'],d:'Proteção sem preparo, sem profissão; "natureza amorfa, pastosa"; "educar o caráter, revestir-se de vontade".'},
+ {id:'t3',t:'Modinha e violão',a:'t-modinha',s:['s3','s7','s8','s17'],d:'O amor romântico das modinhas cega Clara; o violão é "cúmplice" de Cassi.'},
+ {id:'t4',t:'Impunidade e justiça de classe',a:'t-classe',s:['s2','s9','s19','s20','s25'],d:'Lei só para "miseráveis", proteção política, crime esquecido, fuga sem punição.'},
+ {id:'t5',t:'Subúrbio abandonado',a:'t-suburbio',s:['s1','s13','s22'],d:'Impostos sem serviços; o subúrbio como "refúgio dos infelizes".'},
+ {id:'t6',t:'Intelectuais fracassados',a:'t-fracassados',s:['s4','s15','s20','s24','s25'],d:'Marramaque, Meneses, Flores: talento desperdiçado pela pobreza.'},
+ {id:'t7',t:'Bacharelismo e falsa fidalguia',a:'t-fachada',s:['s2','s7','s20','s25','s27'],d:'Praxedes, a "mecânica" de Meneses, o Lord Jones, "todo doutor é inteligente?".'},
+ {id:'t8',t:'A mancha negra (símbolo)',a:'t-simbolos',s:['s23'],d:'A desonra e a exclusão de Clara no céu do Cruzeiro do Sul.'}
+];
+</script>
+<script>
+(function(){
+const NS='http://www.w3.org/2000/svg';
+const svg=document.getElementById('svg'), cam=document.getElementById('cam');
+const gE=document.getElementById('edges'), gN=document.getElementById('nodes'), gL=document.getElementById('labels');
+const painel=document.getElementById('painel');
+const nodes={}, edges=[];
+const SW=300, SH=46, CX=760, Y0=90, GAP=60;
+// ---- posições das cenas
+let y=Y0, lastG=null; const partY={};
+CENAS.forEach(c=>{ if(c.g!==lastG){ y+= lastG?40:0; partY[c.g]=y-8; lastG=c.g; y+=34;} c.x=CX; c.y=y; y+=GAP; });
+const H=y+40;
+// ---- colunas de personagens
+const COLX={fam:430,ali:180,cas:1150,fcas:1390,vit:1390};
+function cenasDe(pid){return CENAS.filter(c=>c.p.includes(pid));}
+PESSOAS.forEach(p=>{ const cs=cenasDe(p.id); p.cs=cs.map(c=>c.id); p.ty = cs.length? cs.reduce((a,c)=>a+c.y,0)/cs.length : Y0; p.x=COLX[p.g]; });
+// vítimas embaixo da família de Cassi: deslocar
+const cols={};
+PESSOAS.forEach(p=>{ const k=(p.g==='vit'||p.g==='fcas')?'right2':p.g; (cols[k]=cols[k]||[]).push(p); });
+Object.values(cols).forEach(list=>{ list.sort((a,b)=>a.ty-b.ty); let last=-1e9; list.forEach(p=>{ p.y=Math.max(p.ty,last+52); last=p.y; }); });
+// temas na extrema direita
+TEMAS.forEach((t,i)=>{ const ys=t.s.map(id=>CENAS.find(c=>c.id===id).y); t.ty=ys.reduce((a,b)=>a+b,0)/ys.length; t.x=1640; });
+TEMAS.sort((a,b)=>a.ty-b.ty); { let last=-1e9; TEMAS.forEach(t=>{ t.y=Math.max(t.ty,last+70); last=t.y; }); }
+const W=1860;
+
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e;}
+function wrap(txt,max){const w=txt.split(' '),out=[];let l='';w.forEach(x=>{ if((l+' '+x).trim().length>max){out.push(l.trim());l=x;} else l+=' '+x; }); if(l.trim())out.push(l.trim()); return out;}
+
+// rótulos de coluna e de parte
+[['Vizinhos e aliados',180],['Família de Clara',430],['Cenas (na ordem do livro)',CX],['Cassi e os seus',1150],['Família de Cassi · vítimas',1390],['Temas',1640]].forEach(([t,x])=>{ const e=el('text',{x:x,y:40,'text-anchor':'middle',class:'collabel'},gL); e.textContent=t; });
+Object.entries(partY).forEach(([g,py])=>{ const e=el('text',{x:CX,y:py,'text-anchor':'middle',class:'plabel'},gL); e.textContent=GRUPOS[g].nome; });
+
+// ---- arestas
+function curva(x1,y1,x2,y2){const mx=(x1+x2)/2; return `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`;}
+PESSOAS.forEach(p=>{ p.cs.forEach(cid=>{ const c=CENAS.find(s=>s.id===cid); const left=p.x<CX; const x1=left?p.x+75:p.x-75; const x2=left?c.x-SW/2:c.x+SW/2; const path=el('path',{d:curva(x1,p.y,x2,c.y),class:'edge',stroke:GRUPOS[p.g].hex},gE); edges.push({a:p.id,b:cid,el:path}); }); });
+TEMAS.forEach(t=>{ t.s.forEach(cid=>{ const c=CENAS.find(s=>s.id===cid); const path=el('path',{d:curva(t.x-90,t.y,c.x+SW/2,c.y),class:'edge',stroke:'#7cc8a0','stroke-dasharray':'4 5'},gE); edges.push({a:t.id,b:cid,el:path}); }); });
+
+// ---- nós
+function nodeBox(id,x,y,w,h,label,hex,kind,star){
+  const g=el('g',{class:'node',tabindex:0,role:'button','aria-label':label,'data-id':id,transform:`translate(${x-w/2},${y-h/2})`},gN);
+  el('rect',{width:w,height:h,rx:kind==='cena'?12:h/2,fill:kind==='cena'?'#171c2b':'#121623',stroke:hex},g);
+  if(kind==='cena') el('rect',{width:6,height:h,rx:3,fill:hex},g);
+  const lines=wrap((star?'★ ':'')+label, kind==='cena'?36:20);
+  lines.slice(0,2).forEach((ln,i)=>{ const t=el('text',{x:kind==='cena'?16:w/2,y:h/2+(i-(Math.min(lines.length,2)-1)/2)*15+5,'font-size':kind==='cena'?13.5:13,fill:'#e9e4d8','text-anchor':kind==='cena'?'start':'middle','font-weight':kind==='cena'?600:600},g); t.textContent=ln; });
+  g.addEventListener('click',e=>{e.stopPropagation(); seleciona(id);});
+  g.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault(); seleciona(id);} });
+  nodes[id]={g};
+}
+CENAS.forEach(c=>nodeBox(c.id,c.x,c.y,SW,SH,c.t+'  ('+c.pg+')',GRUPOS[c.g].hex,'cena',c.star));
+PESSOAS.forEach(p=>nodeBox(p.id,p.x,p.y,150,34,p.t,GRUPOS[p.g].hex,'pessoa'));
+TEMAS.forEach(t=>nodeBox(t.id,t.x,t.y,180,44,t.t,'#7cc8a0','tema'));
+
+// ---- seleção
+const ALL={}; CENAS.forEach(c=>ALL[c.id]={...c,kind:'cena'}); PESSOAS.forEach(p=>ALL[p.id]={...p,kind:'pessoa'}); TEMAS.forEach(t=>ALL[t.id]={...t,kind:'tema',g:'tema'});
+function vizinhos(id){const s=new Set([id]); edges.forEach(e=>{ if(e.a===id) s.add(e.b); if(e.b===id) s.add(e.a); }); return s;}
+function seleciona(id,center){
+  const viz=vizinhos(id); svg.classList.add('dim');
+  Object.entries(nodes).forEach(([k,n])=>{ n.g.classList.toggle('hi',viz.has(k)); n.g.classList.toggle('sel',k===id); });
+  edges.forEach(e=>e.el.classList.toggle('hi',e.a===id||e.b===id));
+  mostra(id);
+  if(center) centraEm(id);
+}
+function limpa(){ svg.classList.remove('dim'); Object.values(nodes).forEach(n=>n.g.classList.remove('hi','sel')); edges.forEach(e=>e.el.classList.remove('hi')); painel.classList.remove('on'); }
+function nomeDe(id){ return ALL[id].t; }
+function mostra(id){
+  const n=ALL[id]; const G=GRUPOS[n.g]; let h='<button class="fechar" aria-label="Fechar">×</button>';
+  if(n.kind==='cena'){
+    h+=`<div class="tipo" style="color:${G.hex}">Cena · ${G.nome}</div><h2>${n.star?'★ ':''}${n.t}</h2><div class="pg">${n.pg}</div><p>${n.d}</p>`;
+    if(n.p.length) h+='<p><b>Quem aparece:</b></p><ul>'+n.p.map(pid=>`<li><button data-go="${pid}">${nomeDe(pid)}</button></li>`).join('')+'</ul>';
+    const ts=TEMAS.filter(t=>t.s.includes(id)); if(ts.length) h+='<p><b>Temas:</b></p><ul>'+ts.map(t=>`<li><button data-go="${t.id}">${t.t}</button></li>`).join('')+'</ul>';
+    h+=`<a class="abrir" href="index.html#${n.a}">Abrir no resumo →</a>`;
+  } else if(n.kind==='pessoa'){
+    h+=`<div class="tipo" style="color:${G.hex}">Personagem · ${G.nome}</div><h2>${n.t}</h2><p>${n.d}</p>`;
+    if(n.cs.length) h+='<p><b>Caminho no livro:</b></p><ul>'+n.cs.map(cid=>`<li><button data-go="${cid}">${ALL[cid].t}</button> <small>${ALL[cid].pg}</small></li>`).join('')+'</ul>';
+    h+=`<a class="abrir" href="index.html#${n.a}">Abrir no resumo →</a>`;
+  } else {
+    h+=`<div class="tipo" style="color:#7cc8a0">Tema</div><h2>${n.t}</h2><p>${n.d}</p><p><b>Aparece em:</b></p><ul>`+n.s.map(cid=>`<li><button data-go="${cid}">${ALL[cid].t}</button> <small>${ALL[cid].pg}</small></li>`).join('')+`</ul><a class="abrir" href="index.html#${n.a}">Abrir no resumo →</a>`;
+  }
+  painel.innerHTML=h; painel.classList.add('on'); painel.scrollTop=0;
+  painel.querySelector('.fechar').onclick=limpa;
+  painel.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{ if(lista.style.display==='block') return; seleciona(b.dataset.go,true); });
+}
+
+// ---- câmera (pan / zoom)
+let tx=0,ty=0,sc=1;
+function aplica(){ cam.setAttribute('transform',`translate(${tx},${ty}) scale(${sc})`); }
+function ajustaLargura(){ const r=svg.getBoundingClientRect(); if(r.width<700){ verTudo(); return; } sc=Math.min(1.1,r.width/1680); tx=(r.width-1625*sc)/2 - 105*sc; ty=10; aplica(); }
+function verTudo(){ const r=svg.getBoundingClientRect(); sc=Math.min(r.width/W, r.height/H)*0.98; if(r.width<700) sc=Math.max(sc, r.width/ (W*0.62)); tx=(r.width-W*sc)/2; ty=10; if(r.width<700){ tx= r.width/2 - CX*sc; } aplica(); }
+function zoom(f,cx,cy){ const r=svg.getBoundingClientRect(); cx=cx??r.width/2; cy=cy??r.height/2; const ns=Math.min(3,Math.max(0.15,sc*f)); tx=cx-(cx-tx)*(ns/sc); ty=cy-(cy-ty)*(ns/sc); sc=ns; aplica(); }
+function centraEm(id){ const n=ALL[id]; const r=svg.getBoundingClientRect(); if(sc<0.6) sc=0.6; tx=r.width/2-n.x*sc; ty=r.height/3-n.y*sc; aplica(); }
+const pts=new Map(); let lastDist=0, moved=false;
+svg.addEventListener('pointerdown',e=>{ svg.setPointerCapture(e.pointerId); pts.set(e.pointerId,{x:e.clientX,y:e.clientY}); moved=false; svg.classList.add('drag'); });
+svg.addEventListener('pointermove',e=>{ if(!pts.has(e.pointerId)) return; const p=pts.get(e.pointerId);
+  if(pts.size===1){ const dx=e.clientX-p.x, dy=e.clientY-p.y; if(Math.abs(dx)+Math.abs(dy)>3) moved=true; tx+=dx; ty+=dy; aplica(); }
+  pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pts.size===2){ const [a,b]=[...pts.values()]; const d=Math.hypot(a.x-b.x,a.y-b.y); const r=svg.getBoundingClientRect(); if(lastDist) zoom(d/lastDist,(a.x+b.x)/2-r.left,(a.y+b.y)/2-r.top); lastDist=d; moved=true; }
+});
+function up(e){ pts.delete(e.pointerId); if(pts.size<2) lastDist=0; if(!pts.size) svg.classList.remove('drag'); }
+svg.addEventListener('pointerup',up); svg.addEventListener('pointercancel',up);
+svg.addEventListener('click',e=>{ if(!moved && e.target===svg) limpa(); });
+svg.addEventListener('wheel',e=>{ e.preventDefault(); const r=svg.getBoundingClientRect(); zoom(e.deltaY<0?1.12:1/1.12,e.clientX-r.left,e.clientY-r.top); },{passive:false});
+// cliques em nós não devem iniciar pan "arrastado"
+gN.addEventListener('pointerdown',e=>e.stopPropagation());
+
+document.getElementById('bMais').onclick=()=>zoom(1.25);
+document.getElementById('bMenos').onclick=()=>zoom(1/1.25);
+document.getElementById('bTudo').onclick=verTudo;
+document.getElementById('bLimpa').onclick=limpa;
+
+// ---- legenda (filtro)
+const leg=document.getElementById('leg');
+Object.entries(GRUPOS).forEach(([k,g])=>{ const s=document.createElement('span'); s.innerHTML=`<i style="background:${g.hex}"></i>${g.nome}`; s.title='Mostrar/esconder'; s.onclick=()=>{ s.classList.toggle('off'); const off=s.classList.contains('off');
+  Object.entries(ALL).forEach(([id,n])=>{ if(n.g===k){ nodes[id].g.style.display=off?'none':''; edges.forEach(e=>{ if(e.a===id||e.b===id) e.el.style.display=off?'none':''; }); } }); }; leg.appendChild(s); });
+
+// ---- modo lista
+const lista=document.getElementById('lista'), wrapEl=document.getElementById('wrap');
+function montaLista(){
+  let h='';
+  ['p1','p2','p3','p4'].forEach(g=>{ h+=`<h3>${GRUPOS[g].nome}</h3>`; CENAS.filter(c=>c.g===g).forEach(c=>{ h+=`<button class="it" style="--c:${GRUPOS[g].hex}" data-id="${c.id}">${c.star?'★ ':''}<b>${c.t}</b> <small>${c.pg}</small></button>`; }); });
+  ['fam','ali','cas','fcas','vit'].forEach(g=>{ h+=`<h3>${GRUPOS[g].nome}</h3>`; PESSOAS.filter(p=>p.g===g).forEach(p=>{ h+=`<button class="it" style="--c:${GRUPOS[g].hex}" data-id="${p.id}"><b>${p.t}</b> <small>${p.cs.length} cena(s)</small></button>`; }); });
+  h+='<h3>Temas</h3>'; TEMAS.forEach(t=>{ h+=`<button class="it" style="--c:#7cc8a0" data-id="${t.id}"><b>${t.t}</b></button>`; });
+  lista.innerHTML=h;
+  lista.querySelectorAll('.it').forEach(b=>b.onclick=()=>{ modo('mapa'); seleciona(b.dataset.id,true); });
+}
+function modo(m){ const mapa=m==='mapa'; wrapEl.style.display=mapa?'':'none'; lista.style.display=mapa?'none':'block'; document.getElementById('bMapa').classList.toggle('on',mapa); document.getElementById('bLista').classList.toggle('on',!mapa); if(mapa) requestAnimationFrame(()=>{ if(!wrapEl.dataset.ok){ajustaLargura(); wrapEl.dataset.ok=1;} }); }
+document.getElementById('bMapa').onclick=()=>modo('mapa');
+document.getElementById('bLista').onclick=()=>modo('lista');
+montaLista();
+
+function ajustaAltura(){ const hh=document.querySelector('header').offsetHeight; wrapEl.style.height=`calc(100% - ${hh}px)`; }
+window.addEventListener('resize',()=>{ajustaAltura();});
+ajustaAltura(); ajustaLargura(); wrapEl.dataset.ok=1;
+function porHash(){ const q=decodeURIComponent(location.hash.slice(1)); if(ALL[q]) seleciona(q,true); }
+window.addEventListener('hashchange',porHash); porHash();
+})();
+</script>
+</body>
+</html>

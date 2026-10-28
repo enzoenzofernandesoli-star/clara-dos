@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Mesa de escritor com papéis, jornal, garrafa e lampião">
+<title>Mesa de escritor com papéis, jornal, garrafa e lampião</title>
+<defs>
+<linearGradient id="ceu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0e1c"/><stop offset="1" stop-color="#1b2444"/></linearGradient>
+<radialGradient id="luz" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#f3d59a" stop-opacity=".9"/><stop offset="1" stop-color="#e6b85c" stop-opacity="0"/></radialGradient>
+<radialGradient id="luzfraca" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#f3d59a" stop-opacity=".45"/><stop offset="1" stop-color="#e6b85c" stop-opacity="0"/></radialGradient>
+<clipPath id="jan"><rect x="560" y="40" width="180" height="230"/></clipPath>
+</defs>
+<rect width="800" height="450" fill="url(#ceu)"/>
+<rect x="0" y="0" width="800" height="450" fill="#151827"/><rect x="560" y="40" width="180" height="230" fill="#0f1220"/><circle clip-path="url(#jan)" cx="259" cy="43" r="0.8" fill="#fff" opacity="0.4"/>
+<circle clip-path="url(#jan)" cx="429" cy="98" r="0.8" fill="#fff" opacity="0.9"/>
+<circle clip-path="url(#jan)" cx="172" cy="26" r="1.6" fill="#fff" opacity="0.4"/>
+<circle clip-path="url(#jan)" cx="73" cy="113" r="0.8" fill="#fff" opacity="1.0"/>
+<circle clip-path="url(#jan)" cx="505" cy="153" r="0.8" fill="#fff" opacity="0.7"/>
+<circle clip-path="url(#jan)" cx="317" cy="254" r="0.8" fill="#fff" opacity="0.7"/>
+<circle clip-path="url(#jan)" cx="107" cy="111" r="0.8" fill="#fff" opacity="0.7"/>
+<circle clip-path="url(#jan)" cx="448" cy="179" r="0.8" fill="#fff" opacity="0.7"/>
+<circle clip-path="url(#jan)" cx="511" cy="99" r="0.8" fill="#fff" opacity="0.7"/>
+<circle clip-path="url(#jan)" cx="495" cy="131" r="1.6" fill="#fff" opacity="0.9"/>
+<circle clip-path="url(#jan)" cx="372" cy="240" r="1.2" fill="#fff" opacity="0.5"/>
+<circle clip-path="url(#jan)" cx="636" cy="183" r="1" fill="#fff" opacity="0.4"/>
+<circle clip-path="url(#jan)" cx="240" cy="131" r="1.2" fill="#fff" opacity="0.8"/>
+<circle clip-path="url(#jan)" cx="230" cy="255" r="0.8" fill="#fff" opacity="0.7"/>
+<circle clip-path="url(#jan)" cx="132" cy="92" r="1.6" fill="#fff" opacity="0.6"/>
+<circle clip-path="url(#jan)" cx="770" cy="24" r="1.2" fill="#fff" opacity="0.6"/>
+<circle clip-path="url(#jan)" cx="280" cy="131" r="1.6" fill="#fff" opacity="0.4"/>
+<circle clip-path="url(#jan)" cx="75" cy="73" r="0.8" fill="#fff" opacity="0.4"/>
+<circle clip-path="url(#jan)" cx="561" cy="170" r="1.6" fill="#fff" opacity="0.5"/>
+<circle clip-path="url(#jan)" cx="309" cy="175" r="0.8" fill="#fff" opacity="1.0"/>
+<circle clip-path="url(#jan)" cx="284" cy="160" r="1.6" fill="#fff" opacity="0.4"/>
+<circle clip-path="url(#jan)" cx="615" cy="37" r="1" fill="#fff" opacity="0.6"/>
+<circle clip-path="url(#jan)" cx="733" cy="131" r="1" fill="#fff" opacity="0.6"/>
+<circle clip-path="url(#jan)" cx="440" cy="230" r="1.6" fill="#fff" opacity="0.9"/>
+<circle clip-path="url(#jan)" cx="223" cy="110" r="1.2" fill="#fff" opacity="0.8"/>
+<circle clip-path="url(#jan)" cx="304" cy="63" r="0.8" fill="#fff" opacity="0.5"/>
+<circle clip-path="url(#jan)" cx="186" cy="64" r="1.6" fill="#fff" opacity="0.9"/>
+<circle clip-path="url(#jan)" cx="146" cy="76" r="1" fill="#fff" opacity="0.6"/>
+<circle clip-path="url(#jan)" cx="295" cy="149" r="1" fill="#fff" opacity="0.8"/>
+<circle clip-path="url(#jan)" cx="412" cy="162" r="0.8" fill="#fff" opacity="0.6"/><rect x="560" y="40" width="180" height="230" fill="none" stroke="#2c3553" stroke-width="10"/><line x1="650" y1="40" x2="650" y2="270" stroke="#2c3553" stroke-width="6"/><circle cx="250" cy="170" r="160" fill="url(#luz)" opacity=".55"/><rect x="0" y="300" width="800" height="150" fill="#2a1d14"/><rect x="0" y="296" width="800" height="8" fill="#3a2a1c"/><path d="M240,300 L240,230 Q250,215 260,230 L260,300 Z" fill="#7a5a2a"/><ellipse cx="250" cy="212" rx="20" ry="26" fill="#fff3c4" opacity=".9"/><rect x="236" y="190" width="28" height="8" fill="#3a2a1c"/><rect x="330" y="250" width="200" height="60" fill="#e9e1cc" transform="rotate(-4 430 280)"/><line x1="345" y1="262" x2="500" y2="258" stroke="#7d7564" stroke-width="2"/><line x1="345" y1="270" x2="494" y2="266" stroke="#7d7564" stroke-width="2"/><line x1="345" y1="278" x2="488" y2="274" stroke="#7d7564" stroke-width="2"/><line x1="345" y1="286" x2="482" y2="282" stroke="#7d7564" stroke-width="2"/><line x1="345" y1="294" x2="476" y2="290" stroke="#7d7564" stroke-width="2"/><line x1="345" y1="302" x2="470" y2="298" stroke="#7d7564" stroke-width="2"/><rect x="420" y="248" width="150" height="56" fill="#d8ceb2" transform="rotate(6 495 276)"/><text x="440" y="276" font-family="Georgia,serif" font-size="16" fill="#3a3326" transform="rotate(6 495 276)">JORNAL</text><rect x="610" y="225" width="22" height="75" rx="6" fill="#2f5a3a" opacity=".9"/><rect x="616" y="208" width="10" height="20" fill="#2f5a3a"/><ellipse cx="160" cy="292" rx="26" ry="8" fill="#d9d2c0"/><rect x="140" y="268" width="40" height="24" rx="4" fill="#efe8d6"/><line x1="380" y1="300" x2="450" y2="240" stroke="#c9a74a" stroke-width="4" stroke-linecap="round"/>
+</svg>
